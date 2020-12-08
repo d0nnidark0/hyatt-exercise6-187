@@ -1,0 +1,60 @@
+//AUTHOR: James Hyatt	
+//COURSE: CPT 187
+/*PURPOSE: To write item purchased orders to a file to be used for printing a final report.*/
+//START DATE: 11/15/2020
+
+
+package edu.cpt187.hyatt.exercise6; //Package that contains the classes Inventory, MainClass, Order, UserAccounts, WriteOrder
+
+import java.io.PrintWriter; //Imports PrintWriter creates output using the same data processing behaviors as the Scanner class
+import java.io.FileWriter; //Imports FileWriter to write data to a .dat or .txt file
+import java.io.IOException; //Imports IOException class to catch exceptions 
+
+public class WriteOrder
+{//START WriteOrder class
+	private boolean fileFoundFlag = false; //Initialize boolean fileFoundFlag
+	private String masterFileName = ""; //Empty string for masterFileName
+	private int recordCount = 0; //Initialize recordCount to 0
+	
+	//WriteOrder constructor
+	public WriteOrder(String borrowedFileName)
+	{//Start constructor
+		masterFileName = borrowedFileName; //Passes in the file name and assigns to masterFileName
+	}//End constructor
+	
+	//Setter, void method
+	public void setWriteOrder(int borrowedItemID, String borrowedItemName, double borrowedItemPrice, int borrowedQuantity, double borrowedOrderCost)
+	{//Start void method
+		try
+		{//Start try
+			PrintWriter filePW = new PrintWriter(new FileWriter(masterFileName, fileFoundFlag)); //Writes file to master file name
+			//Format specifier %n starts a new line or record
+			//Format specifier %t is a tab to separate data elements
+			filePW.printf("%n%d\t%s\t%.2f\t%d\t%.2f", borrowedItemID,  borrowedItemName, borrowedItemPrice, borrowedQuantity, borrowedOrderCost);
+			fileFoundFlag = true;
+			recordCount++; //Increment recordCount
+			filePW.close(); //Close filePW, free up RAM
+		}//End try
+		catch (IOException ex)
+		{//Start catch
+			fileFoundFlag = false; //Sets fileFoundFlag to false
+		}//End catch	
+	}//End void method
+	
+	//Getter, VR methods
+	public boolean getFileFoundFlag()
+	{//Start VR method
+		return fileFoundFlag; //Return boolean value
+	}//End VR method
+	
+	public String getFileName()
+	{//Start VR method
+		return masterFileName; //Returns masterFileName
+	}//End VR method
+	
+	public int getRecordCount()
+	{//Start VR method
+		return recordCount; //Returns WriteOrder recordCount
+	}//End VR method
+	
+}//END class
